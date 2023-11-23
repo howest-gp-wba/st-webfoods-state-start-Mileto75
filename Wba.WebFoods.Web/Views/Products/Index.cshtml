@@ -17,6 +17,9 @@
                        <a asp-controller="Products"
                           asp-action="Info"
                           asp-route-id="@product.Id" class="btn btn-outline-info">Info</a>
+                       <a asp-controller="Cart"
+                          asp-action="Add"
+                          asp-route-id="@product.Id" class="btn btn-outline-info">Add to cart</a>
                    </td>
                </tr>
             }

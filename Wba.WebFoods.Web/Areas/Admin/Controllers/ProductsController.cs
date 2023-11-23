@@ -165,6 +165,8 @@ namespace Wba.WebFoods.Web.Areas.Admin.Controllers
             try
             {
                 _webFoodsDbContext.SaveChanges();
+                //create a tempData message
+                TempData["Message"] = "Product created!";
                 return RedirectToAction("Index");
             }
             catch (DbUpdateException dbUpdateException)

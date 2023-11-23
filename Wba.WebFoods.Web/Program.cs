@@ -17,6 +17,8 @@ namespace Wba.WebFoods.Web
                 options => 
                 options.UseSqlServer(builder.Configuration.GetConnectionString("WebFoodsDb"))
                 );
+            //enable sessions
+            builder.Services.AddSession();
             //add own services
             builder.Services.AddTransient<IFormBuilderService,FormBuilderService>();
             builder.Services.AddTransient<IFileService,FileService>();
@@ -34,7 +36,7 @@ namespace Wba.WebFoods.Web
             
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthorization();
