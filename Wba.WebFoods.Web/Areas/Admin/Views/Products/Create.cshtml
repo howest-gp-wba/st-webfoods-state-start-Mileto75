@@ -1,0 +1,11 @@
+﻿@model ProductsCreateViewModel
+<div class="row">
+    <div class="col col-lg-5 mx-auto border border-1 rounded rounded-3">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <form asp-controller="Products" asp-action="Create" method="post" enctype="multipart/form-data">
+            @* call partial *@
+            <partial name="_ProductFormPartial" model="@Model" />
+            <button type="submit" class="btn btn-primary mb-2 mt-2">Create</button>
+        </form>
+    </div>
+</div>
