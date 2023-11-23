@@ -17,7 +17,16 @@ namespace Wba.WebFoods.Web.Controllers
         public IActionResult Index()
         {
             //show shopping cart
-            return View();
+            //get the cart from the session
+            CartIndexViewModel cartIndexViewModel = new ();
+            cartIndexViewModel.Items = new();
+            if (HttpContext.Session.Keys.Contains("cartItems"))
+            {
+                var sessionData = HttpContext.Session.GetString("cartItems");
+                cartIndexViewModel = JsonConvert.DeserializeObject
+                    <CartIndexViewModel>(sessionData);
+            }
+            return View(cartIndexViewModel);
         }
         public IActionResult Add(int id)
         {
@@ -40,7 +49,29 @@ namespace Wba.WebFoods.Web.Controllers
                 var sessionData = HttpContext.Session.GetString("cartItems");
                 cartIndexViewModel = JsonConvert.DeserializeObject
                     <CartIndexViewModel>(sessionData);
+                //add product to cart
+                //check if already in cart
+                if(cartIndexViewModel.Items.Any(i => i.Id == id))
+                {
+                    //product in cart
+                    //increment quantity
+                    cartIndexViewModel.Items
+                        .FirstOrDefault(i => i.Id == id)
+                        .Quantity++;
+                }
+                else
+                {
+                    //add product with quantity 1
+                    cartIndexViewModel.Items.Add(
+                new CartItemModel
+                {
+                    Id = product.Id,
+                    Value = product.Name,
+                    Price = product.Price,
+                    Quantity = 1,
+                });
 
+                }
             }
             else//first product added
             {
